@@ -1,8 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
 
+import { Container } from './styles';
+
 const SignUp: React.FC = () => {
-  return <Text>SignUP</Text>
+  return <Container><Text>SignUP</Text></Container>
 }
 
 export default SignUp;
