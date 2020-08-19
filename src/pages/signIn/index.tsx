@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
+
 import Icon from 'react-native-vector-icons/Feather';
 
 import Input from '../../components/Input';
@@ -16,6 +20,14 @@ import {
 } from './styles'
 
 const SignIn: React.FC = () => {
+
+  const navigation = useNavigation();
+  const formRef = useRef<FormHandles>(null);
+
+  const handleSignIn = useCallback((data: object) => {
+    console.log(data);
+  }, []);
+
   return (
     <>
     <KeyboardAvoidingView
@@ -25,7 +37,7 @@ const SignIn: React.FC = () => {
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flex: 1 }}
+        // contentContainerStyle={{ flex: 1 }}
       >
         <Container>
           <Image source={logoImg} />
@@ -34,10 +46,11 @@ const SignIn: React.FC = () => {
             <Title>Faça seu logon</Title>
           </View>
 
-          <Input name="email" icon="mail" placeholder="E-mail" />
-          <Input name="password" icon="lock" placeholder="Senha" />
-
-          <Button onPress={() => {}}>Entrar</Button>
+          <Form onSubmit={handleSignIn} ref={formRef}>
+            <Input name="email" icon="mail" placeholder="E-mail" />
+            <Input name="password" icon="lock" placeholder="Senha" />
+          </Form>
+          <Button onPress={() => formRef.current?.submitForm() }>Entrar</Button>
 
           <ForgotPassword>
             <ForgotPasswordText>esqueci minha senha</ForgotPasswordText>
@@ -46,7 +59,7 @@ const SignIn: React.FC = () => {
         </Container>
       </ScrollView>
     </KeyboardAvoidingView>
-    <CreateAccountButton>
+    <CreateAccountButton onPress={() => navigation.navigate('SignUp')} >
       <Icon name="log-in" size={20} color="#ff9000" />
       <CreateAccountButtonText>
         criar uma conta
