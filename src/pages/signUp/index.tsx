@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import * as Yup from 'yup';
+import api from '../../services/api';
 
 import {Form} from '@unform/mobile';
 import {FormHandles} from '@unform/core';
@@ -54,20 +55,14 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
 
-      // await api.post("/users", data);
+      await api.post('/users', data);
 
-      // history.push("/");
+      navigation.goBack();
 
       Alert.alert(
         'Cadastro realizado',
         'Você já pode fazer seu logon no Gobarber!',
       );
-
-      // addToast({
-      //   type: "success",
-      //   title: "Cadastro realizado!",
-      //   description: "Você já pode fazer seu logon no Gobarber!",
-      // });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
