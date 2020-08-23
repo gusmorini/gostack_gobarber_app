@@ -39,8 +39,7 @@ const SignUp: React.FC = () => {
         enabled>
         <ScrollView
           keyboardShouldPersistTaps="handled"
-          // contentContainerStyle={{ flex: 1 }}
-        >
+          contentContainerStyle={{flex: 1}}>
           <Container>
             <Image source={logoImg} />
 
